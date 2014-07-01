@@ -15,17 +15,19 @@ var stringifyJSON = function(obj) {
   	
   	return "[" + array.toString() + "]";
 
-  } else if (typeof(obj) === "string") {
+  } else if (typeof obj === "string") {
   	return '"' + obj.toString() + '"';
-  } else if (typeof(obj) === "number" || typeof(obj) === "boolean") {
+  } else if (typeof obj === "number" || typeof obj === "boolean") {
   	return obj.toString();
-  } else {
+  } else if (typeof obj === "object") {
     var object = [];
 
     for (var key in obj) {
-      var str = "";
-      str += (stringifyJSON(key)) + ":" + stringifyJSON(obj[key]);
-      object.push(str);
+      if (typeof obj[key] !== 'function' && key !== 'undefined') {
+        var str = "";
+        str += (stringifyJSON(key)) + ":" + stringifyJSON(obj[key]);
+        object.push(str);
+      }
     }
     return "{" + object.toString() + "}";
   }
