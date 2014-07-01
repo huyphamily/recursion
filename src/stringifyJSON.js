@@ -17,7 +17,16 @@ var stringifyJSON = function(obj) {
 
   } else if (typeof(obj) === "string") {
   	return '"' + obj.toString() + '"';
-  } else {
+  } else if (typeof(obj) === "number" || typeof(obj) === "boolean") {
   	return obj.toString();
+  } else {
+    var object = [];
+
+    for (var key in obj) {
+      var str = "";
+      str += (stringifyJSON(key)) + ":" + stringifyJSON(obj[key]);
+      object.push(str);
+    }
+    return "{" + object.toString() + "}";
   }
 };
