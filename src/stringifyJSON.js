@@ -7,10 +7,14 @@ var stringifyJSON = function(obj) {
   if(obj === null) {
   	return 'null';
   } else if (Array.isArray(obj)) {
+  	var array = [];
+
   	for (var i = 0; i < obj.length; i++) {
-  		obj[i] = stringifyJSON(obj[i]);
+  		array.push(stringifyJSON(obj[i]));
   	}
-  	return "[" + obj + "]";
+  	
+  	return "[" + array.toString() + "]";
+
   } else if (typeof(obj) === "string") {
   	return '"' + obj.toString() + '"';
   } else {
